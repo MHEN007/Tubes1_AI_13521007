@@ -7,10 +7,11 @@ public class HillClimbBot implements Bot {
     private static final int ROW = 8;
     private static final int COL = 8;
 
-    private String symbol;
+    private String symbol, enemySymbol;
 
     public HillClimbBot(String symbol){
         this.symbol = symbol;
+        this.enemySymbol = this.symbol == "O" ? "O" : "X";
     }
 
     @Override
@@ -52,14 +53,8 @@ public class HillClimbBot implements Bot {
     @Override
     public void setPlayerScore(int i, int j, Button[][] btn){
 
-        if(this.symbol.equals("O")){
-            if (btn[i][j].getText().equals("X")) {
-                btn[i][j].setText("O");
-            }
-        }else{
-            if (btn[i][j].getText().equals("O")) {
-                btn[i][j].setText("X");
-            }
+        if (btn[i][j].getText().equals(this.enemySymbol)) {
+            btn[i][j].setText(this.symbol);
         }
 
     }
@@ -98,12 +93,8 @@ public class HillClimbBot implements Bot {
         ArrayList<Integer> moveYs = new ArrayList<>();
 
         Button[][] state = copyState(buttons);
-        
-        if(this.symbol.equals("O")){
-            botScore = countMark("O", state);
-        }else{
-            botScore = countMark("X", state);
-        }
+    
+        botScore = countMark(this.symbol, state);
 
         for(int i = 0; i < 8 ; i++){
             for(int j = 0; j < 8; j++){
@@ -112,11 +103,7 @@ public class HillClimbBot implements Bot {
                 
                 if(state[i][j].getText().equals("")){
                     /* If available, set O at i,j */
-                    if(this.symbol.equals("O")){
-                        state[i][j].setText("O");
-                    }else{
-                        state[i][j].setText("X");
-                    }
+                    state[i][j].setText(this.symbol);
                     /* Update Adjacent */
                     updateGameBoard(i,j, state);
                     /* Add State to States */
@@ -127,40 +114,31 @@ public class HillClimbBot implements Bot {
             }
         }
     
-
-        while(!states.isEmpty()){
+        int count = 0;
+        boolean found = false;
+        while(count < 5){
             int idx = (int) (Math.random() * states.size());
             Button[][] eval = copyState(states.get(idx));
 
             /* Evaluate this State */
-            if(this.symbol.equals("O")){
-                int countO = countMark("O", eval);
-                if(countO > this.botScore && countO > countMark("X", eval)){
-                    this.botScore = countO;
-                    this.moveX = moveXs.get(idx);
-                    this.moveY = moveYs.get(idx);
-                    return new int[]{this.moveX, this.moveY};
-                }else if(countO > this.botScore){
-                    this.botScore = countO;
-                    this.moveX = moveXs.get(idx);
-                    this.moveY = moveYs.get(idx);
-                }
-            }else{
-                int countX = countMark("X", eval);
-                if(countX > this.botScore && countX > countMark("O", eval)){
-                    this.botScore = countX;
-                    this.moveX = moveXs.get(idx);
-                    this.moveY = moveYs.get(idx);
-                    return new int[]{this.moveX, this.moveY};
-                }else if(countX > this.botScore){
-                    this.botScore = countX;
-                    this.moveX = moveXs.get(idx);
-                    this.moveY = moveYs.get(idx);
-                }
+            int countO = countMark(this.symbol, eval);
+            if(countO > this.botScore && countO > countMark(this.enemySymbol, eval)){
+                this.botScore = countO;
+                this.moveX = moveXs.get(idx);
+                this.moveY = moveYs.get(idx);
+                found = true;
             }
-            states.remove(idx);
-            moveXs.remove(idx);
-            moveYs.remove(idx);
+            // states.remove(idx);
+            // moveXs.remove(idx);
+            // moveYs.remove(idx);
+            count++;
+        }
+
+        /* If there isn't any better successor, just use a random state */
+        if(!found){
+            int idx = (int) (Math.random() * states.size());
+            this.moveX = moveXs.get(idx);
+            this.moveY = moveYs.get(idx);
         }
         return new int[]{this.moveX, this.moveY};
     }
