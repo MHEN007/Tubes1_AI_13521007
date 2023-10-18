@@ -94,7 +94,7 @@ public class HillClimbBot implements Bot {
 
         Button[][] state = copyState(buttons);
     
-        botScore = countMark(this.symbol, state);
+        this.botScore = countMark(this.symbol, state) - countMark(this.enemySymbol, state);
 
         for(int i = 0; i < 8 ; i++){
             for(int j = 0; j < 8; j++){
@@ -116,13 +116,13 @@ public class HillClimbBot implements Bot {
     
         int count = 0;
         boolean found = false;
-        while(count < 5){
+        while(count < 64){
             int idx = (int) (Math.random() * states.size());
             Button[][] eval = copyState(states.get(idx));
 
             /* Evaluate this State */
-            int countO = countMark(this.symbol, eval);
-            if(countO > this.botScore && countO > countMark(this.enemySymbol, eval)){
+            int countO = countMark(this.symbol, eval) - countMark(this.enemySymbol, eval);
+            if(countO > this.botScore){
                 this.botScore = countO;
                 this.moveX = moveXs.get(idx);
                 this.moveY = moveYs.get(idx);
