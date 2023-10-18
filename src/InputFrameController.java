@@ -53,7 +53,7 @@ public class InputFrameController{
         this.numberOfRounds.getSelectionModel().select(0);
 
         ObservableList<String> algorithms = FXCollections.observableArrayList(
-            "", "Hill Climbing", "Minimax", "Human"
+            "", "Hill Climbing", "Minimax", "Human", "Genetic"
         );
         this.player1Algo.setItems(algorithms);
         this.player1Algo.getSelectionModel().select(0);

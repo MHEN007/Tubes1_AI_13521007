@@ -96,6 +96,8 @@ public class OutputFrameController {
         }else if(algo1.equals("Human")){
             // Human Bot, Use Selection
             this.XisHuman = true;
+        }else if(algo1.equals("Genetic")){
+            this.xBot = new Genetic("X");
         }
 
         // Player O
@@ -106,6 +108,8 @@ public class OutputFrameController {
         }else if(algo2.equals("Human")){
             // Human Bot use Selection
             this.OisHuman = true;
+        }else if(algo2.equals("Genetic")){
+            this.bot = new Genetic("X");
         }
 
         this.playerXTurn = !isBotFirst;
@@ -115,6 +119,9 @@ public class OutputFrameController {
                     MiniMaxBot minimaxOBot = (MiniMaxBot) this.bot;
                     minimaxOBot.setDepth(0);
                     // minimaxBot.setDepth(this.roundsLeft + 1);
+                }else if(this.algo2.equals("Genetic") && this.bot instanceof Genetic){
+                    Genetic minimaxOBot = (Genetic) this.bot;
+                    minimaxOBot.setDepth(0);
                 }
                 
                 this.moveOBot();
@@ -125,6 +132,9 @@ public class OutputFrameController {
                     MiniMaxBot minimaxXBot = (MiniMaxBot) this.xBot;
                     minimaxXBot.setDepth(0);
                     // minimaxBot.setDepth(this.roundsLeft + 1);
+                }else if(this.algo1.equals("Genetic") && this.xBot instanceof Genetic){
+                    Genetic minimaxOBot = (Genetic) this.xBot;
+                    minimaxOBot.setDepth(0);
                 }
                 // Bot X's turn
                 this.moveXBot();
