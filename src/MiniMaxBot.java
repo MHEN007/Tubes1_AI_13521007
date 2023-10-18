@@ -5,28 +5,30 @@ public class MiniMaxBot implements Bot {
     private static final int COL = 8;
     private int moveX, moveY, botScore = Integer.MIN_VALUE;
     private int depth;
-    private boolean turnX;
+    private boolean playersTurn;
 
-    private String symbol;
+    private String symbol, enemySymbol;
 
     public MiniMaxBot(String symbol){
         this.symbol = symbol;
+        if(this.symbol.equals("O")){
+            this.enemySymbol = "X";
+        }else{
+            this.enemySymbol = "O";
+        }
+        this.playersTurn = true;
     }
 
     public void setDepth(int depth){
         this.depth = depth;
     }
 
-    public void setTurn(boolean turnX){
-        this.turnX = turnX;
-    }
-
     @Override
     public int[] move(Button[][] buttons) {
-        return move(buttons, this.depth, this.turnX);
+        return move(buttons, this.depth, this.playersTurn);
     }
 
-    public int[] move(Button[][] buttons, int depth, boolean playerXTurn) {
+    public int[] move(Button[][] buttons, int depth, boolean playersTurn) {
         this.moveX = -1;
         this.moveY = -1;
         this.botScore = Integer.MIN_VALUE;
@@ -37,17 +39,13 @@ public class MiniMaxBot implements Bot {
                 if (buttons[i][j].getText().equals("")) {
                     Button[][] copyBoard = copyState(buttons);
 
-                    if (playerXTurn) {
-                        copyBoard[i][j].setText("O");
-                    } else {
-                        copyBoard[i][j].setText("X");
-                    }
+                    copyBoard[i][j].setText(this.symbol);
 
                     updateGameBoard(i, j, copyBoard);
 
                     int alpha = Integer.MIN_VALUE, beta = Integer.MAX_VALUE;
 
-                    int score = minimax(copyBoard, depth + 1, alpha, beta, !playerXTurn);
+                    int score = minimax(copyBoard, depth + 1, alpha, beta, !playersTurn);
 
                     if (score > this.botScore) {
                         this.botScore = score;
@@ -102,16 +100,18 @@ public class MiniMaxBot implements Bot {
 
     @Override
     public void setPlayerScore(int i, int j, Button[][] buttons){
-        if (this.turnX) {
-            if (buttons[i][j].getText().equals("O")) {
-                buttons[i][j].setText("X");
+        if (this.playersTurn) {
+            if (buttons[i][j].getText().equals(this.enemySymbol)) {
+                buttons[i][j].setText(this.symbol);
             }
-        } else if (buttons[i][j].getText().equals("X")) {
-            buttons[i][j].setText("O");
+        } else {
+            if (buttons[i][j].getText().equals(this.symbol)) {
+                buttons[i][j].setText(this.enemySymbol);
+            }
         }
     }
 
-    private int minimax(Button[][] buttons, int depth, int alpha, int beta, boolean playerXTurn) {
+    private int minimax(Button[][] buttons, int depth, int alpha, int beta, boolean playersTurn) {
         if (depth == 3 || isGameOver(buttons)) {
             return heuristic(buttons);
         }
@@ -123,12 +123,13 @@ public class MiniMaxBot implements Bot {
             for (int j = 0; j < COL; j++) {
                 if (buttons[i][j].getText().equals("")) {
                     Button[][] copyBoard = copyState(buttons);
-                    copyBoard[i][j].setText(playerXTurn ? "O" : "X");
+                    copyBoard[i][j].setText(playersTurn ? this.symbol : this.enemySymbol);
+                    this.playersTurn = playersTurn;
                     updateGameBoard(i, j, copyBoard);
 
-                    int eval = minimax(copyBoard, depth + 1, alpha, beta, !playerXTurn);
+                    int eval = minimax(copyBoard, depth + 1, alpha, beta, !playersTurn);
 
-                    if (playerXTurn) {
+                    if (playersTurn) {
                         maxEval = Math.max(eval, maxEval);
                         alpha = Math.max(alpha, eval);
                     } else {
@@ -143,7 +144,7 @@ public class MiniMaxBot implements Bot {
             }
         }
 
-        return playerXTurn ? maxEval : minEval;
+        return playersTurn ? maxEval : minEval;
     }
 
     private boolean isGameOver(Button[][] buttons) {
@@ -151,11 +152,7 @@ public class MiniMaxBot implements Bot {
     }
 
     private int heuristic(Button[][] buttons) {
-        if(this.symbol.equals("O")){
-            return countMark("O", buttons) - countMark("X", buttons);
-        }else{
-            return countMark("X", buttons) - countMark("O", buttons);
-        }
+        return countMark(this.symbol, buttons) - countMark(this.enemySymbol, buttons);
     }
 
     @Override

@@ -113,7 +113,6 @@ public class OutputFrameController {
             if(!this.OisHuman){
                 if(this.algo2.equals("Minimax") && this.bot instanceof MiniMaxBot){
                     MiniMaxBot minimaxOBot = (MiniMaxBot) this.bot;
-                    minimaxOBot.setTurn(this.playerXTurn);
                     minimaxOBot.setDepth(0);
                     // minimaxBot.setDepth(this.roundsLeft + 1);
                 }
@@ -124,7 +123,6 @@ public class OutputFrameController {
             if(!this.XisHuman){
                 if(this.algo1.equals("Minimax") && this.xBot instanceof MiniMaxBot){
                     MiniMaxBot minimaxXBot = (MiniMaxBot) this.xBot;
-                    minimaxXBot.setTurn(this.playerXTurn);
                     minimaxXBot.setDepth(0);
                     // minimaxBot.setDepth(this.roundsLeft + 1);
                 }
@@ -239,8 +237,6 @@ public class OutputFrameController {
 
                 if(this.algo2.equals("Minimax") && this.bot instanceof MiniMaxBot){
                     MiniMaxBot minimaxBot = (MiniMaxBot) this.bot;
-                    minimaxBot.setTurn(this.playerXTurn);
-                    // minimaxBot.setDepth(this.roundsLeft + 1);
                     minimaxBot.setDepth(0);
                 }
 
@@ -280,8 +276,6 @@ public class OutputFrameController {
 
                 if(this.algo1.equals("Minimax") && this.xBot instanceof MiniMaxBot){
                     MiniMaxBot minimaxBot = (MiniMaxBot) this.xBot;
-                    minimaxBot.setTurn(this.playerXTurn);
-                    // minimaxBot.setDepth(this.roundsLeft + 1);
                     minimaxBot.setDepth(0);
                 }
 
