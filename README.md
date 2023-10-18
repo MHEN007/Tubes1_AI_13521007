@@ -1,7 +1,16 @@
-# Adversarial Adjacency-Strategy-Game
+# Tugas Besar 1 - Adversarial Adjacency-Strategy-Game
 <kbd>
   <img src="https://github.com/ahnjedid/Adjacency-Strategy-Game/blob/master/screenshots/gamePlay.png">
 </kbd>
+
+### Anggota Kelompok
+| NIM | NAMA |
+| --- | ---- |
+| 13521007 | Matthew Mahendra |
+| 13521010 | Muhamad Salman Hakim Alfarisi |
+| 13521013 | Eunice Sarah Siregar |
+| 13521018 | Syarifa Dwi Purnamasari |
+
 
 <hr>
 
@@ -9,6 +18,11 @@
 The “Adjacency” program was designed as an interactive and strategic board game that is played between two players. Using X’s and O’s on an 8x8 board outputted on a computer screen, the objective of the game is for a player to get more X’s than O’s in total or vice versa after a specific number of rounds.
 
 The initial game starts with 4 X’s in the bottom left corner and 4 O’s in the top right corner.  The first player will begin by placing an X on an empty square (through clicking).  In turn, all O’s that are on adjacent squares are then replaced with X’s.  Play will continue with the second player taking his turn by placing an O on an empty square.  In turn, all X’s that are on adjacent squares are then replaced with O’s.
+
+The algorithm(s) implemented in this game are:
+1. Stochastic Hill Climbing Search
+2. Minimax with Alpha-Beta Pruning
+3. Genetic Algorithm with Minimax Approach
 
 <hr>
 
