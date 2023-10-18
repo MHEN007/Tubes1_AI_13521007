@@ -11,7 +11,7 @@
     <padding><Insets top="5" bottom="5" left="5" right="5"/></padding>
     <top>
         <GridPane>
-            <Label text="Player Name (X): " GridPane.rowIndex="0" GridPane.columnIndex="0">
+            <Label text="Bot Name (X): " GridPane.rowIndex="0" GridPane.columnIndex="0">
                 <font>
                     <Font name="Arial Bold" size="12"/>
                 </font>
@@ -25,19 +25,33 @@
             </Label>
             <TextField fx:id="player2" GridPane.rowIndex="1" GridPane.columnIndex="1" />
 
-            <Label text="Number of Rounds to be played: " GridPane.rowIndex="2" GridPane.columnIndex="0">
+            <Label text="Bot X Algorithm:" GridPane.rowIndex="2" GridPane.columnIndex="0">
                 <font>
                     <Font name="Arial Bold" size="12"/>
                 </font>
             </Label>
-            <ComboBox fx:id="numberOfRounds" GridPane.rowIndex="2" GridPane.columnIndex="1" maxWidth="Infinity" />
+            <ComboBox fx:id="player1Algo" GridPane.rowIndex="2" GridPane.columnIndex="1" maxWidth="Infinity" />
 
-            <Label text="Bot goes first: " GridPane.rowIndex="3" GridPane.columnIndex="0">
+            <Label text="Bot O Algorithm:" GridPane.rowIndex="3" GridPane.columnIndex="0">
                 <font>
                     <Font name="Arial Bold" size="12"/>
                 </font>
             </Label>
-            <CheckBox fx:id="isBotFirst" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+            <ComboBox fx:id="player2Algo" GridPane.rowIndex="3" GridPane.columnIndex="1" maxWidth="Infinity" />
+
+            <Label text="Number of Rounds to be played: " GridPane.rowIndex="4" GridPane.columnIndex="0">
+                <font>
+                    <Font name="Arial Bold" size="12"/>
+                </font>
+            </Label>
+            <ComboBox fx:id="numberOfRounds" GridPane.rowIndex="4" GridPane.columnIndex="1" maxWidth="Infinity" />
+
+            <Label text="O goes first: " GridPane.rowIndex="5" GridPane.columnIndex="0">
+                <font>
+                    <Font name="Arial Bold" size="12"/>
+                </font>
+            </Label>
+            <CheckBox fx:id="isBotFirst" GridPane.rowIndex="5" GridPane.columnIndex="1" />
         </GridPane>
     </top>
 
